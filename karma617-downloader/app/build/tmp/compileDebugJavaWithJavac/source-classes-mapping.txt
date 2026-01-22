@@ -1,0 +1,2 @@
+com/qdapi/downloader/BuildConfig.java
+ com.qdapi.downloader.BuildConfig

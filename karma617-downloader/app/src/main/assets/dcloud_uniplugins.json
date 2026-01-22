@@ -1,0 +1,13 @@
+{
+  "nativePlugins": [
+    {
+      "plugins": [
+        {
+          "type": "module",
+          "name": "Karma617-DownloaderManager",
+          "class": "com.qdapi.downloaderManager.KarmaDownloader"
+        }
+      ]
+    }
+  ]
+}

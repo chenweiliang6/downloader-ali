@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion '29.0.2'
+    defaultConfig {
+        applicationId "com.qdapi.downloader"
+        minSdkVersion 28
+        targetSdkVersion 28 //建议此属性值设为21 io.dcloud.PandoraEntry 作为apk入口时   必须设置 targetSDKVersion>=21 沉浸式才生效
+
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        ndk {
+            abiFilters 'x86','armeabi-v7a'
+        }
+    }
+
+    signingConfigs {
+        config {
+            keyAlias 'karma617-downloader'
+            keyPassword '123123'
+            storeFile file('F:/uniapp/1-uniapp-karma617/uniapp-karma617-downloader/certificate/downloader.keystore')
+            storePassword '123123'
+            v1SigningEnabled true //兼容v1
+            v2SigningEnabled true //兼容v2
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+        }
+        release {
+            signingConfig signingConfigs.config
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //使用uniapp时，需复制下面代码
+    /*代码开始*/
+    aaptOptions {
+        additionalParameters '--auto-add-overlay'
+        //noCompress 'foo', 'bar'
+        ignoreAssetsPattern "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
+    }
+    /*代码结束*/
+}
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
+
+    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation "com.android.support:support-v4:28.0.0"
+    implementation "com.android.support:appcompat-v7:28.0.0"
+
+    /*uniapp所需库-----------------------开始*/
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.facebook.fresco:fresco:1.13.0'
+    implementation "com.facebook.fresco:animated-gif:1.13.0"
+    /*uniapp所需库-----------------------结束*/
+
+    // 基座需要，必须添加
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.alibaba:fastjson:1.1.46.android'
+
+    // 添加uni-app插件
+    implementation project(':uniplugin_test')
+}
